@@ -12,7 +12,7 @@ class Places extends StatelessWidget {
         title: const Text('My Places'),
         actions: [
           IconButton(
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.navigate_next),
               onPressed: () {
                 Navigator.of(context).pushNamed(AppRoutes.placeForm);
               }),

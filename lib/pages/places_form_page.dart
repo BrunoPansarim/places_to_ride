@@ -14,8 +14,19 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
       appBar: AppBar(
         title: const Text('Novo Lugar'),
       ),
-      body: const Center(
-        child: Text('Formulário!'),
+      body: const Column(
+        children: [
+          TextField(
+            decoration: InputDecoration(
+              labelText: 'E-mail',
+              labelStyle: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            textAlign: TextAlign.center,
+          )
+        ],
       ),
     );
   }
