@@ -6,7 +6,20 @@ import 'package:places_to_ride/models/places.dart';
 import 'package:places_to_ride/utils/db_util.dart';
 
 class GreatPlaces with ChangeNotifier {
-  final List<Place> _items = [];
+  List<Place> _items = [];
+
+  Future<void> carregarPlaces() async {
+    final dataList = await DbUtil.getData('places');
+    _items = dataList.map(
+      (item) => Place(
+      id: item['id'],
+      title: item['title'],
+      image: File(item['image']),
+      location: null,
+    ),
+    ).toList();
+    notifyListeners();
+  }
 
   List<Place> get items {
     return [..._items];
@@ -25,7 +38,7 @@ class GreatPlaces with ChangeNotifier {
       id: Random().nextDouble().toString(),
       title: title,
       image: image,
-      location: 'Indaiatuba'
+      location: null,
     );
 
     _items.add(novoLugar);
@@ -35,11 +48,6 @@ class GreatPlaces with ChangeNotifier {
       'image': novoLugar.image.path,
     });
     notifyListeners();
-  }
-
-  static Future<List<Map<String, dynamic>>> getData() {
-    // TODO: implement getData
-    throw UnimplementedError();
   }
 
 }

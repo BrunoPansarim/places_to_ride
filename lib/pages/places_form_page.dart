@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:places_to_ride/providers/great_places.dart';
 import 'package:places_to_ride/widgets/image_input.dart';
+import 'package:places_to_ride/widgets/location_input.dart';
 import 'package:provider/provider.dart';
 
 class PlaceFormPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class PlaceFormPage extends StatefulWidget {
 
 class _PlaceFormPageState extends State<PlaceFormPage> {
   final _titleController = TextEditingController();
-  late File? _pickedImage;
+  File? _pickedImage;
 
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
@@ -24,7 +25,10 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
     if(_titleController.text.isEmpty || _pickedImage == null) {
       return;
     }
-    Provider.of<GreatPlaces>(context, listen: false).addLugar(_titleController.text, _pickedImage!);
+    Provider.of<GreatPlaces>(context, listen: false).addLugar(
+      _titleController.text,
+       _pickedImage!
+       );
 
     Navigator.of(context).pop();
   }
@@ -49,7 +53,7 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
                     TextField(
                       controller: _titleController,
                       decoration: const InputDecoration(
-                        labelText: 'E-mail',
+                        labelText: 'Título',
                         labelStyle: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -58,6 +62,8 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
                     ),
                     const SizedBox(height: 10),
                     ImageInput(_selectImage),
+                    const SizedBox(height: 20),
+                    const LocationInput(),
                   ],
                 ),
               ),
