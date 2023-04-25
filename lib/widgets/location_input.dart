@@ -69,7 +69,7 @@ class _LocationInputState extends State<LocationInput> {
             ElevatedButton.icon(
                 onPressed: _selectOnMap,
                 icon: const Icon(Icons.map_outlined),
-                label: const Text('Selecione no mapa')),
+                label: const Text('Selecione')),
           ],
         )
       ],

@@ -4,19 +4,30 @@ import 'package:places_to_ride/models/places.dart';
 
 class MapPage extends StatefulWidget {
   final PlaceLocation initialLocation;
+  final bool isReadOnly;
 
-  const MapPage({
-    this.initialLocation = const PlaceLocation(
-      latitude: 37.422131,
-      longitude: -122.084801,
-    ),
-  });
+  const MapPage(
+      {this.initialLocation = const PlaceLocation(
+        latitude: 37.419857,
+        longitude: -122.078827,
+      ),
+        this.isReadOnly = false,
+        Key? key})
+      : super(key: key);
 
   @override
   State<MapPage> createState() => _MapPageState();
 }
 
 class _MapPageState extends State<MapPage> {
+  LatLng? _pickedPosition;
+
+  void _selectPosition(LatLng position) {
+    setState(() {
+      _pickedPosition = position;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +42,15 @@ class _MapPageState extends State<MapPage> {
           ),
           zoom: 13,
         ),
+        onTap: widget.isReadOnly ? null : _selectPosition,
+        markers: _pickedPosition == null
+            ? {}
+            : {
+                Marker(
+                  markerId: const MarkerId('p1'),
+                  position: _pickedPosition!,
+                  ),
+              },
       ),
     );
-  }
-}
+  }}
