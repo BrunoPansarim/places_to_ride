@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:places_to_ride/pages/map_page.dart';
+import 'package:places_to_ride/utils/constante_location.dart';
 
 class LocationInput extends StatefulWidget {
   const LocationInput({Key? key}) : super(key: key);
@@ -13,8 +15,26 @@ class _LocationInputState extends State<LocationInput> {
 
   Future<void> _getCurrentUserLocation() async {
     final locData = await Location().getLocation();
-    print(locData.latitude);
-    print(locData.longitude);
+
+    final staticMapImageUrl = LocationUtil.generateLocationPreviewImage(
+      latitude: locData.latitude,
+      longitude: locData.longitude,
+    );
+
+    setState(() {
+      _previewImageUrl = staticMapImageUrl;
+    });
+  }
+
+  Future<void> _selectOnMap() async {
+    final selectedLocation = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (ctx) => const MapPage(),
+      ),
+    );
+
+    if (selectedLocation == null) return;
   }
 
   @override
@@ -34,24 +54,22 @@ class _LocationInputState extends State<LocationInput> {
           child: _previewImageUrl == null
               ? const Text('Sem localização')
               : Image.network(
-                _previewImageUrl!,
-            fit: BoxFit.cover,
-            width: double.infinity,
-          ),
+                  _previewImageUrl!,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-              onPressed: _getCurrentUserLocation,
-              icon: const Icon(Icons.location_on),
-              label: const Text('Localização atual')
-            ),
+                onPressed: _getCurrentUserLocation,
+                icon: const Icon(Icons.location_on),
+                label: const Text('Localização atual')),
             ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.map_outlined),
-              label: const Text('Selecione no mapa')
-            ),
+                onPressed: _selectOnMap,
+                icon: const Icon(Icons.map_outlined),
+                label: const Text('Selecione no mapa')),
           ],
         )
       ],
