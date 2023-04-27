@@ -1,2 +1,2 @@
 # places
- Lugares
+ Lugares Favoritos
