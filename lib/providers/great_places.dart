@@ -12,18 +12,20 @@ class GreatPlaces with ChangeNotifier {
 
   Future<void> carregarPlaces() async {
     final dataList = await DbUtil.getData('places');
-    _items = dataList.map(
-      (item) => Place(
-      id: item['id'],
-      title: item['title'],
-      image: File(item['image']),
-      location: PlaceLocation(
-        latitude: item['latitude'],
-        longitude: item['longitude'],
-        address: item['address'],
-      ),
-    ),
-    ).toList();
+    _items = dataList
+        .map(
+          (item) => Place(
+            id: item['id'],
+            title: item['title'],
+            image: File(item['image']),
+            location: PlaceLocation(
+              latitude: item['latitude'],
+              longitude: item['longitude'],
+              address: item['address'],
+            ),
+          ),
+        )
+        .toList();
     notifyListeners();
   }
 
@@ -39,21 +41,22 @@ class GreatPlaces with ChangeNotifier {
     return _items[index];
   }
 
-  void addLugar(String title, File image, LatLng position) async {
-
+  Future<void> addLugar(String title, File image, LatLng position) async {
     String address = await LocationUtil.getAddressFrom(position);
 
     final novoLugar = Place(
       id: Random().nextDouble().toString(),
       title: title,
       image: image,
-      location: PlaceLocation(latitude: position.latitude, longitude: position.longitude, address: address,
+      location: PlaceLocation(
+        latitude: position.latitude,
+        longitude: position.longitude,
+        address: address,
       ),
     );
 
     _items.add(novoLugar);
-    DbUtil.insert('places',
-        {
+    DbUtil.insert('places', {
       'id': novoLugar.id,
       'title': novoLugar.title,
       'image': novoLugar.image.path,
@@ -63,5 +66,4 @@ class GreatPlaces with ChangeNotifier {
     });
     notifyListeners();
   }
-
 }

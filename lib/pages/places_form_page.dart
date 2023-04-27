@@ -86,7 +86,6 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
             ),
           ),
           ElevatedButton.icon(
-            onPressed: _isValidForm() ? _submited : null,
             icon: const Icon(Icons.add),
             label: const Text('Adicionar'),
             style: ElevatedButton.styleFrom(
@@ -95,6 +94,7 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
               elevation: 0,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
+            onPressed: _isValidForm() ? _submited : null,
           ),
         ],
       ),

@@ -18,11 +18,11 @@ const GOOGLE_API_KEY = 'AIzaSyB-vCWSpX8rOaJmV-CwZbW58sO9gQROIJg';
 
   static Future<String> getAddressFrom(LatLng position) async {
     final url = Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$GOOGLE_API_KEY'
-    );
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$GOOGLE_API_KEY');
       final response = await http.get(url);
       return json
           .decode(response.body)['results'][0]['formatted_address']
           .toString();
   }
 }
+

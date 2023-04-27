@@ -33,14 +33,17 @@ class _MapPageState extends State<MapPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('GoogleMap'),
-        actions: <Widget> [
+        actions: [
           if (!widget.isReadOnly)
-          IconButton(icon: const Icon(Icons.check),
-            onPressed: _pickedPosition == null ? null : () {
+          IconButton(
+            icon: const Icon(Icons.check),
+            onPressed: _pickedPosition == null 
+            ? null 
+            : () {
               Navigator.of(context).pop(_pickedPosition);
-            }
-          )
-        ]
+            },
+          ),
+        ],
       ),
       body: GoogleMap(
         initialCameraPosition: CameraPosition(
