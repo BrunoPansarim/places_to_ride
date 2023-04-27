@@ -75,6 +75,9 @@ class _PlaceFormPageState extends State<PlaceFormPage> {
                         ),
                       ),
                       textAlign: TextAlign.start,
+                      onChanged: (text) {
+                        setState(() {});
+                      },
                     ),
                     const SizedBox(height: 10),
                     ImageInput(_selectImage),
